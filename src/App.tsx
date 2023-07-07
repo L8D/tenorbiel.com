@@ -1,13 +1,24 @@
 import { motion } from "framer-motion";
-import {useCallback} from "react";
+import { useCallback } from "react";
+import { scroller, Element } from "react-scroll";
 import "./App.css";
 
 const ONCE = true;
 
 function App() {
-  const seeSkills = useCallback(() => {}, [
+  const seeSkills = useCallback(() => {
+    scroller.scrollTo("passions", {
+      duration: 800,
+      smooth: 'easeOutQuint'
+    });
+  }, []);
 
-  ])
+  const seePassions = useCallback(() => {
+    scroller.scrollTo("passions", {
+      duration: 800,
+      smooth: 'easeOutQuint',
+    });
+  }, []);
 
   return (
     <>
@@ -387,6 +398,7 @@ function App() {
               }}
             >
               <motion.button
+                onClick={seePassions}
                 initial={{ scale: 1, y: 0 }}
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.99, transition: { duration: 0.05 } }}
@@ -413,7 +425,11 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="bg-white flex flex-col gap-y-10 py-10 items-center px-5">
+
+      <Element
+        name="passions"
+        className="bg-white flex flex-col gap-y-10 py-10 items-center px-5"
+      >
         <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10">
           <div className="grow flex flex-col gap-y-10 items-start">
             <div className="flex flex-col gap-y-5 items-start">
@@ -596,7 +612,7 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </Element>
     </>
   );
 }
