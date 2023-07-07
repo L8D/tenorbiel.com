@@ -1,24 +1,87 @@
-import { motion } from "framer-motion";
-import { useCallback } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { useCallback, useRef } from "react";
 import { scroller, Element } from "react-scroll";
 import "./App.css";
 
 const ONCE = true;
 
+const SkillTag = (props: { name: string; index: number }) => {
+  return (
+    <motion.div
+      viewport={{ once: ONCE }}
+      initial={{ y: 20, opacity: 0, scale: 0 }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          type: "spring",
+          delay: 0.2 + props.index * 0.05,
+          mass: 0.5,
+        },
+      }}
+    >
+      <motion.div className="px-1 shadow rounded-full py-2 bg-white inline-block flex flex-col items-start gap-y-2 group relative overflow-hidden">
+        <span className="px-2 w-full font-[HelveticaNowDisplay] font-semibold tracking-wider text-xl text-[#252422]/[0.6] inline-flex justify-between items-center leading-none">
+          <span className="whitespace-nowrap">{props.name}</span>
+        </span>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 function App() {
   const seeSkills = useCallback(() => {
-    scroller.scrollTo("passions", {
+    scroller.scrollTo("skills", {
       duration: 800,
-      smooth: 'easeOutQuint'
+      smooth: "easeOutQuint",
     });
   }, []);
 
   const seePassions = useCallback(() => {
     scroller.scrollTo("passions", {
       duration: 800,
-      smooth: 'easeOutQuint',
+      smooth: "easeOutQuint",
     });
   }, []);
+
+  const goToPassionsButton = (
+    <motion.div
+      viewport={{ once: ONCE }}
+      initial={{ y: 20, opacity: 0, scale: 0.9 }}
+      whileInView={{
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { type: "spring", delay: 0.5, mass: 0.5, stiffness: 50 },
+      }}
+    >
+      <motion.button
+        onClick={seePassions}
+        initial={{ scale: 1, y: 0 }}
+        whileHover={{ scale: 1.05, y: -1 }}
+        whileTap={{ scale: 0.99, transition: { duration: 0.05 } }}
+        className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2 group relative overflow-hidden hover:shadow-inset"
+      >
+        <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2]"></div>
+        <span className="px-2 w-full font-[HelveticaNowDisplay] font-semibold tracking-wider text-xl text-[#252422]/[0.6] uppercase inline-flex justify-between items-center leading-none">
+          <span>See Passions</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M14.77 4.21a.75.75 0 01.02 1.06l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 011.08-1.04L10 8.168l3.71-3.938a.75.75 0 011.06-.02zm0 6a.75.75 0 01.02 1.06l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 111.08-1.04L10 14.168l3.71-3.938a.75.75 0 011.06-.02z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </span>
+      </motion.button>
+    </motion.div>
+  );
 
   return (
     <>
@@ -296,7 +359,8 @@ function App() {
           </div>
         </motion.div>
       </motion.div>
-      <div className="bg-[#eb5e28]">
+
+      <div className="bg-[#eb5e28] pb-24">
         <div className="mx-auto p-5 sm:max-w-xl sm:min-h-[860px] flex flex-col justify-center gap-y-10 md:items-center">
           <div className="pt-10 gap-[20px] flex flex-col md:items-center">
             <motion.div
@@ -328,6 +392,7 @@ function App() {
                 }}
               />
             </motion.div>
+
             <motion.div
               viewport={{ once: ONCE }}
               initial={{ opacity: 0, y: 10 }}
@@ -336,11 +401,12 @@ function App() {
                 y: 0,
                 transition: { delay: 0.2, ease: "circOut" },
               }}
-              className="text-white font-['Albert_Sans'] text-[20px] md:text-center"
+              className="text-white font-['Albert_Sans'] text-[20px] md:text-center select-none"
             >
               Hello! I am Tenor. I bring a focused energy to product iteration
               with high-fidelity prototypes, built in TypeScript.
             </motion.div>
+
             <motion.div
               viewport={{ once: ONCE }}
               initial={{ width: "0%" }}
@@ -353,6 +419,7 @@ function App() {
           </div>
           <div className="flex flex-col sm:flex-row gap-5 gap-y-5 mb-10">
             <motion.div
+              layout
               viewport={{ once: ONCE }}
               initial={{ y: 20, opacity: 0, scale: 0.9 }}
               whileInView={{
@@ -363,6 +430,7 @@ function App() {
               }}
             >
               <motion.button
+                layout
                 initial={{ scale: 1, y: 0 }}
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.99, transition: { duration: 0.05 } }}
@@ -387,228 +455,453 @@ function App() {
                 </span>
               </motion.button>
             </motion.div>
-            <motion.div
-              viewport={{ once: ONCE }}
-              initial={{ y: 20, opacity: 0, scale: 0.9 }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: { type: "spring", delay: 0.5, mass: 0.5 },
-              }}
-            >
-              <motion.button
-                onClick={seePassions}
-                initial={{ scale: 1, y: 0 }}
-                whileHover={{ scale: 1.05, y: -1 }}
-                whileTap={{ scale: 0.99, transition: { duration: 0.05 } }}
-                className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2 group relative overflow-hidden hover:shadow-inset"
-              >
-                <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2]"></div>
-                <span className="px-2 w-full font-[HelveticaNowDisplay] font-semibold tracking-wider text-xl text-[#252422]/[0.6] uppercase inline-flex justify-between items-center leading-none">
-                  <span>See Passions</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M14.77 4.21a.75.75 0 01.02 1.06l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 011.08-1.04L10 8.168l3.71-3.938a.75.75 0 011.06-.02zm0 6a.75.75 0 01.02 1.06l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 111.08-1.04L10 14.168l3.71-3.938a.75.75 0 011.06-.02z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              </motion.button>
-            </motion.div>
+
+            {goToPassionsButton}
           </div>
         </div>
       </div>
 
+      <div className="bg-[#eb5e28] bg-[center_left_40px] bg-[url(pattern-darkened.svg)] bg-repeat h-8 w-full"></div>
+
+      <Element
+        name="skills"
+        className="bg-[#eb5e28] bg-[length:8000px_8000px] bg-[center_left_19500px] bg-[url(background-pattern.svg)] bg-repeat py-5"
+      >
+        <motion.div className="mx-auto p-5 sm:max-w-2xl sm:py-[80px] sm:min-h-[800px] flex flex-col justify-center gap-y-10 md:items-center relative">
+          <motion.div
+            viewport={{ once: ONCE }}
+            initial={{ scale: 0.9, opacity: 0, rotateX: 45 }}
+            whileInView={{
+              scale: 1,
+              opacity: 1,
+              rotateX: 0,
+              transition: { delay: 0.5, duration: 0.5, ease: "easeOut" },
+            }}
+            className="absolute inset-5"
+          >
+            <div className="relative w-full h-full">
+              <div className="absolute top-0 left-0 border-l-4 border-t-4 w-20 h-40 border-white"></div>
+              <div className="absolute bottom-0 right-0 border-r-4 border-b-4 w-14 h-12 border-white"></div>
+            </div>
+          </motion.div>
+
+          <div className="px-5 pt-8 mb-10">
+            <div className="max-w-7xl mx-auto relative flex flex-col items-center gap-y-10 sm:gap-y-0">
+              <motion.span
+                viewport={{ once: ONCE }}
+                initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: { delay: 0.3, ease: "backOut", duration: 0.5 },
+                }}
+                className="text-center text-white text-6xl sm:text-9xl font-bold font-['Montserrat'] uppercase tracking-wider leading-none select-none"
+              >
+                Skills
+              </motion.span>
+
+              <div className="hidden sm:block">{goToPassionsButton}</div>
+            </div>
+          </div>
+          <div className="flex flex-row gap-3 gap-y-3 mb-10 flex-wrap justify-center select-none">
+            {[
+              "TypeScript",
+              "React",
+              "TailwindCSS",
+              "Framer Motion",
+              "UI/UX",
+              "Product Research",
+              "User Research",
+              "Team Advocacy",
+              "Documentation",
+              "React Native",
+              "Web3",
+              "Ethereum",
+              "Prisma",
+              "Node.js",
+              "HTTP",
+              "GraphQL",
+              "REST APIs",
+              "Serverless",
+              "Onboarding",
+              "Monitoring",
+              "Analytics",
+              "Feature Flags",
+            ].map((name, index) => (
+              <SkillTag name={name} index={index} />
+            ))}
+          </div>
+        </motion.div>
+      </Element>
+
       <Element
         name="passions"
-        className="bg-white flex flex-col gap-y-10 py-10 items-center px-5"
+        className="bg-white flex flex-col gap-y-10 items-stretch"
       >
-        <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10">
-          <div className="grow flex flex-col gap-y-10 items-start">
-            <div className="flex flex-col gap-y-5 items-start">
-              <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                passion
+        <div className="bg-[#f7a17c] w-full flex justify-between gap-10 relative">
+          <div className="w-full mx-5 my-20 flex items-center justify-center">
+            <div className="border border-white gap-10 sm:h-[18rem] relative sm:flex sm:flex-row">
+              <div className="sm:min-w-[24rem] w-screen max-w-sm overflow-hidden text-clip overflow-hidden relative text-center flex flex-col items-start gap-y-5 justify-end my-10">
+                <div className="text-3xl font-[Inter] leading-none break-none text-clip bg-white text-[#f7a17c] tracking-tightest pl-20">
+                  PASSIONS
+                </div>
+
+                <div className="relative h-8">
+                  <div className="absolute bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-96"></div>
+                </div>
               </div>
-              <div className="max-w-full relative flex">
-                <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
-                  Interaction Design
-                </span>
-                {/*
+
+              <div className="basis-0 shrink-0 inline-block shrink-0 font-mono text-white flex items-end tracking-widest px-5 my-10 min-w-[12rem]">
+                interaction design
+                <br />
+                inclusive design
+                <br />
+                team advocacy
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute w-full flex justify-center -bottom-4">
+            <div className="bg-[center_left_4px] bg-[url(pattern-inverted.svg)] bg-repeat h-8 w-96"></div>
+          </div>
+          <div className="absolute w-full flex justify-center -bottom-4">
+            <div className="bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-96"></div>
+          </div>
+        </div>
+
+        <div className="py-20 flex flex-col gap-y-10 items-center">
+          <div className="w-full px-5">
+            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto">
+              <div className="grow flex flex-col gap-y-10 items-start">
+                <div className="flex flex-col gap-y-5 items-start">
+                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                      passion
+                    </div>
+                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
+                      01
+                    </div>
+                  </div>
+                  <div className="max-w-full relative flex">
+                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
+                      Interaction Design
+                    </span>
+                    {/*
 - animations
 - prototyping
 - research-informed UX improvements
 - user flows, look and feel
     */}
+                  </div>
+                </div>
+                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
+                  <div>
+                    <span className="font-semibold">
+                      Empathy is the best building block for a user-friendly
+                      product.
+                    </span>{" "}
+                    Through research, I identify common interaction pitfalls in
+                    existing experiences. By staying aware of pitfalls and
+                    avoiding them, our final product can deliver an
+                    uncompromisingly-empathetic experience for your market.
+                  </div>
+                  <ul className="list-inside list-disc">
+                    <li className="font-semibold">identifying pitfalls</li>
+                    <li className="font-semibold">
+                      innovating with motion design
+                    </li>
+                    <li className="font-semibold">
+                      delivering state-of-the-art user flows
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
-              <div>
-                <span className="font-semibold">
-                  Empathy is the best building block for a user-friendly
-                  product.
-                </span>{" "}
-                Through research, I identify common interaction pitfalls in
-                existing experiences. By staying aware of pitfalls and avoiding
-                them, our final product can deliver an
-                uncompromisingly-empathetic experience for your market.
-              </div>
-              <ul className="list-inside list-disc">
-                <li className="font-semibold">identifying pitfalls</li>
-                <li className="font-semibold">innovating with motion design</li>
-                <li className="font-semibold">
-                  delivering state-of-the-art user flows
-                </li>
-              </ul>
-            </div>
-          </div>
-          {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
-          <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
-            <div>
-              <video
-                className="rounded-full max-w-xs mx-auto"
-                autoPlay
-                loop
-                muted
-                src="/piece-1.mov"
-              />
-            </div>
-            <div className="w-80 h-80 relative overflow-hidden rounded-full">
-              <video
-                className="absolute w-full h-full rounded-full max-w-sm mx-auto object-cover w-full h-auto scale-150"
-                autoPlay
-                loop
-                muted
-                src="/piece-2.mov"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10">
-          <div className="grow flex flex-col gap-y-10 items-start">
-            <div className="flex flex-col gap-y-5 items-start">
-              <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                passion
-              </div>
-              <div className="max-w-full relative flex">
-                <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
-                  Inclusive Products
-                </span>
-              </div>
-            </div>
-            <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
-              <div>
-                I am driven by the belief that{" "}
-                <span className="font-semibold">
-                  design has the power to transform lives
-                </span>
-                . It is my unwavering commitment to design and develop digital
-                experiences that are accessible, user-friendly, and inclusive. I
-                prefer the opportunity to challenge the status quo while
-                building a customer-focused product.
+              {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
+              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+                <div>
+                  <video
+                    className="rounded-full max-w-xs mx-auto"
+                    autoPlay
+                    loop
+                    muted
+                    src="/piece-1.mov"
+                  />
+                </div>
+                <div className="w-80 h-80 relative overflow-hidden rounded-full">
+                  <video
+                    className="absolute w-full h-full rounded-full max-w-sm mx-auto object-cover w-full h-auto scale-150"
+                    autoPlay
+                    loop
+                    muted
+                    src="/piece-2.mov"
+                  />
+                </div>
               </div>
             </div>
           </div>
-
-          {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
-          <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
-            <div>
-              <img
-                alt="inclusive design"
-                className="rounded-full max-w-xs mx-auto saturate-50"
-                src="/inclusive-design.jpeg"
-              />
-            </div>
-
-            <div className="w-80 h-80 relative overflow-hidden rounded-full">
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center text-white/[0.8]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
-                  />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
-                  />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"
-                  />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
-                  />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-12 h-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                  />
-                </svg>
+          <div className="bg-[#f7a17c] bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-full"></div>
+          <div className="w-full px-5">
+            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto">
+              <div className="grow flex flex-col gap-y-10 items-start">
+                <div className="flex flex-col gap-y-5 items-start">
+                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                      passion
+                    </div>
+                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
+                      02
+                    </div>
+                  </div>
+                  <div className="max-w-full relative flex">
+                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
+                      Inclusive Products
+                    </span>
+                  </div>
+                </div>
+                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
+                  <div>
+                    I am driven by the belief that{" "}
+                    <span className="font-semibold">
+                      design has the power to transform lives
+                    </span>
+                    . It is my unwavering commitment to design and develop
+                    digital experiences that are accessible, user-friendly, and
+                    inclusive. I prefer the opportunity to challenge the status
+                    quo while building a customer-focused product.
+                  </div>
+                </div>
               </div>
 
-              <img
-                alt="globe"
-                className="rounded-full w-full h-full object-cover"
-                src="/globe.jpeg"
-              />
+              {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
+              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+                <div>
+                  <img
+                    alt="inclusive design"
+                    className="rounded-full max-w-xs mx-auto saturate-50"
+                    src="/inclusive-design.jpeg"
+                  />
+                </div>
+
+                <div className="w-80 h-80 relative overflow-hidden rounded-full">
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-white/[0.8]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                      />
+                    </svg>
+                  </div>
+
+                  <img
+                    alt="globe"
+                    className="rounded-full w-full h-full object-cover"
+                    src="/globe.jpeg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[#f7a17c] bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-full"></div>
+          <div className="w-full px-5">
+            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto">
+              <div className="grow flex flex-col gap-y-10 items-start">
+                <div className="flex flex-col gap-y-5 items-start">
+                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                      passion
+                    </div>
+                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
+                      03
+                    </div>
+                  </div>
+                  <div className="max-w-full relative flex">
+                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
+                      Team Advocacy
+                    </span>
+                  </div>
+                </div>
+                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
+                  <div>
+                    When working with a team, I strive to create a harmonious
+                    team culture that enables each individual to unlock their
+                    full potential. Together, by codifying team-member feedback
+                    into team working agreements, we can establish clear
+                    guidelines and expectations that promote respectful
+                    communication, consistent outcomes and equitable
+                    decision-making. Through empowering working conditions, we
+                    can foster an environment where{" "}
+                    <span className="font-semibold">
+                      every contributor can do their best work
+                    </span>
+                    .
+                    {/* TODO: https://gist.github.com/L8D/093036002023be710cd43a0da55ad6dd */}
+                  </div>
+                </div>
+              </div>
+
+              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+                <div>
+                  <img
+                    alt="inclusive design"
+                    className="rounded-full max-w-xs mx-auto saturate-50"
+                    src="/inclusive-design.jpeg"
+                  />
+                </div>
+
+                <div className="w-80 h-80 relative overflow-hidden rounded-full">
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-white/[0.8]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                      />
+                    </svg>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-12 h-12"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                      />
+                    </svg>
+                  </div>
+
+                  <img
+                    alt="globe"
+                    className="rounded-full w-full h-full object-cover"
+                    src="/globe.jpeg"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
