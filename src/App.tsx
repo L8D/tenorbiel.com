@@ -1,10 +1,17 @@
+import {motion} from 'framer-motion'
 import "./App.css";
+
+const ONCE = true
 
 function App() {
   return (
     <>
-      <div className="graphic-wrapper p-5 md:p-[100px] md:min-h-[800px]">
-        <svg
+      <motion.div
+        className="graphic-wrapper p-5 md:p-[100px] md:min-h-[800px]">
+        <motion.svg
+          viewport={{once: ONCE}}
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1, transition: {delay: 0.1, ease: 'easeIn'}}}
           style={{
             outline: "none",
             display: "flex",
@@ -25,8 +32,13 @@ function App() {
               Tenor
             </h1>
           </foreignObject>
-        </svg>
-        <div className="subheading">
+        </motion.svg>
+
+        <motion.div
+          viewport={{once: ONCE}}
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1, transition: {delay: 0.2, ease: 'easeIn'}}}
+          className="subheading">
           <div
             className="subheading-item"
             style={{
@@ -66,8 +78,13 @@ function App() {
           >
             <div style={{ textAlign: "right" }}>2023</div>
           </div>
-        </div>
-        <div className="graphic">
+        </motion.div>
+
+        <motion.div
+          viewport={{once: ONCE}}
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1, transition: {delay: 0.3, ease: 'easeIn'}}}
+          className="graphic">
           <div className="graphic-block">
             <svg
               viewBox="0 0 200 200"
@@ -251,12 +268,17 @@ function App() {
               />
             </svg>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <div className="bg-[#eb5e28]">
-        <div className="mx-auto p-5 sm:max-w-xl sm:min-h-[860px] flex flex-col justify-center gap-y-12 md:items-center">
-          <div className="pt-10 pb-5 gap-[20px] flex flex-col md:items-center border-b-4 border-white">
-            <div className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full flex-none">
+        <div className="mx-auto p-5 sm:max-w-xl sm:min-h-[860px] flex flex-col justify-center gap-y-10 md:items-center">
+          <div className="pt-10 gap-[20px] flex flex-col md:items-center">
+            <motion.div
+              viewport={{once: ONCE}}
+              initial={{scale: 0, y: 10}}
+              whileInView={{scale: 1, y: 0, transition: {delay: 0.1}}}
+              transition={{type: 'spring', mass: 0.5}}
+              className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full flex-none">
               <img
                 className="object-cover rounded-full h-full w-full"
                 src="https://framerusercontent.com/images/A6CUvZ5PjXmwdMvyDnrOSj6gdo.jpeg"
@@ -278,14 +300,30 @@ function App() {
                   imageRendering: "auto",
                 }}
               />
-            </div>
-            <div className="text-white font-['Albert_Sans'] text-[20px] md:text-center">
+            </motion.div>
+            <motion.div
+              viewport={{once: ONCE}}
+              initial={{opacity: 0, y: 10}}
+              whileInView={{opacity: 1, y: 0, transition: {delay: 0.2, ease: 'circOut'}}}
+              className="text-white font-['Albert_Sans'] text-[20px] md:text-center">
               Hello! I am Tenor. I bring a focused energy to product iteration
               with high-fidelity prototypes, built in TypeScript.
-            </div>
+            </motion.div>
+          <motion.div 
+            viewport={{once: ONCE}}
+            initial={{width: '0%'}}
+            whileInView={{width: '100%', transition: {delay: 0.2,  ease: 'circOut'}}}
+            className="border-b-4 border-white"></motion.div>
           </div>
           <div className="flex flex-col sm:flex-row gap-5 gap-y-5 mb-10">
-            <div className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2">
+            <motion.button
+              viewport={{once: ONCE}}
+              initial={{y: 20, opacity: 0, scale: 0.9}}
+              whileInView={{opacity: 1, y: 0, scale: 1, transition: {type: 'spring', delay: 0.3, mass: 0.5}}}
+              whileHover={{scale: 1.05, y: -1}}
+              whileTap={{scale: 0.99, transition: {duration: 0.05}}}
+              className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2 group relative overflow-hidden hover:shadow-inset">
+              <div className='absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2]'></div>
               <span className="px-2 w-full font-[HelveticaNowDisplay] font-semibold tracking-wider text-xl text-[#252422]/[0.6] uppercase inline-flex justify-between items-center leading-none">
                 <span>See Skills</span>
                 <svg
@@ -301,8 +339,15 @@ function App() {
                   />
                 </svg>
               </span>
-            </div>
-            <div className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2">
+            </motion.button>
+            <motion.button
+              viewport={{once: ONCE}}
+              initial={{y: 20, opacity: 0, scale: 0.9}}
+              whileInView={{opacity: 1, y: 0, scale: 1, transition: {type: 'spring', delay: 0.5, mass: 0.5}}}
+              whileHover={{scale: 1.05, y: -1}}
+              whileTap={{scale: 0.99, transition: {duration: 0.05}}}
+              className="w-52 shadow rounded-lg py-2 cursor-pointer bg-white inline-block flex flex-col items-start gap-y-2 group relative overflow-hidden hover:shadow-inset">
+              <div className='absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2]'></div>
               <span className="px-2 w-full font-[HelveticaNowDisplay] font-semibold tracking-wider text-xl text-[#252422]/[0.6] uppercase inline-flex justify-between items-center leading-none">
                 <span>See Passions</span>
                 <svg
@@ -318,7 +363,7 @@ function App() {
                   />
                 </svg>
               </span>
-            </div>
+            </motion.button>
           </div>
         </div>
       </div>
