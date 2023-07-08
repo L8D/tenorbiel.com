@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useCallback, useRef } from "react";
+import {InlineWidget} from "react-calendly";
 import { scroller, Element } from "react-scroll";
 import "./App.css";
 
@@ -1103,7 +1104,6 @@ function App() {
               </div>
             </div>
 
-            {/*
             <div className="flex justify-between w-full gap-5 items-center opacity-75">
               <div className="grow border-t border-[#f7a17c]"></div>
               <div className="text-[#f7a17c] text-lg font-[HelveticaNowDisplay] font-semibold leading-none">
@@ -1115,7 +1115,8 @@ function App() {
             <div className="inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
               schedule a call
             </div>
-              */}
+
+            <InlineWidget url="https://calendly.com/tenorb/45-minute-meeting" />
           </div>
         </div>
       </div>
