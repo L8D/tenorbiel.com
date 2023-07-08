@@ -1,8 +1,57 @@
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useCallback, useRef } from "react";
 import { InlineWidget } from "react-calendly";
 import { scroller, Element } from "react-scroll";
 import "./App.css";
+
+const ExternalContent = (props: {
+  label: string;
+  title: string;
+  domain: string;
+  url: string;
+}) => {
+  return (
+    <motion.a
+      href={props.url}
+      target="_blank"
+      initial={{ scale: 1, y: 0 }}
+      whileHover={{ scale: 1.01, y: -1 }}
+      whileTap={{ scale: 1, transition: { duration: 0.05 } }}
+      className="rounded-lg bg-white shadow px-2 py-3 inline-flex flex-col gap-y-2 relative group overflow-hidden"
+    >
+      <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2]"></div>
+      <div className="flex justify-between gap-10">
+        <div className="font-[Inter] uppercase text-[11px] text-[#252422]/[0.5] leading-none font-light tracking-wider">
+          {props.label}
+        </div>
+        <div className="font-[Albert_Sans] text-xs text-[#252422]/[0.5] leading-none tracking-wide flex items-center gap-1 group-hover:underline">
+          {props.domain}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+              clipRule="evenodd"
+            />
+            <path
+              fillRule="evenodd"
+              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div className="font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.7] -my-2 tracking-wider group-hover:underline">
+        {props.title}
+      </div>
+    </motion.a>
+  );
+};
 
 const ONCE = true;
 
@@ -38,8 +87,8 @@ const PassionSection = (props: {
         className="absolute inset-0 w-full h-full from-[#f7a17c]"
       ></div>
 
-      <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10">
-        <div className="grow flex flex-col gap-y-10 items-start">
+      <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10 items-stretch">
+        <div className="grow flex flex-col gap-y-10 min-h-full">
           <div className="flex flex-col gap-y-5 items-start">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -75,7 +124,7 @@ const PassionSection = (props: {
             initial={{ opacity: 0, y: 10 }}
             animate={visible ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
             transition={{ delay: initialDelay + 0.3, ease: "easeOut" }}
-            className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5"
+            className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5 h-full"
           >
             {props.content}
           </motion.div>
@@ -567,6 +616,8 @@ function App() {
             </motion.div>
 
             {goToPassionsButton}
+
+            {/* TODO: include SEE MORE which goes to contact section */}
           </div>
         </div>
       </div>
@@ -792,25 +843,43 @@ function App() {
             heading={<>Interaction Design</>}
             content={
               <>
-                <div>
-                  <span className="font-semibold">
-                    Empathy is the best building block for a user-friendly
-                    product.
-                  </span>{" "}
-                  Through research, I identify common interaction pitfalls in
-                  existing experiences. By staying aware of pitfalls and
-                  avoiding them, our final product can deliver an
-                  uncompromisingly-empathetic experience for your market.
+                <div className="grow flex flex-col gap-y-10 items-start">
+                  <div>
+                    <span className="font-semibold">
+                      Empathy is the best building block for a user-friendly
+                      product.
+                    </span>{" "}
+                    Through research, I identify common interaction pitfalls in
+                    existing experiences. By staying aware of pitfalls and
+                    avoiding them, our final product can deliver an
+                    uncompromisingly-empathetic experience for your market.
+                  </div>
+                  <ul className="list-inside list-disc">
+                    <li className="font-semibold">identifying pitfalls</li>
+                    <li className="font-semibold">
+                      innovating with motion design
+                    </li>
+                    <li className="font-semibold">
+                      delivering state-of-the-art user flows
+                    </li>
+                  </ul>
                 </div>
-                <ul className="list-inside list-disc">
-                  <li className="font-semibold">identifying pitfalls</li>
-                  <li className="font-semibold">
-                    innovating with motion design
-                  </li>
-                  <li className="font-semibold">
-                    delivering state-of-the-art user flows
-                  </li>
-                </ul>
+
+                <div className="flex flex-wrap gap-5 gap-y-5">
+                  <ExternalContent
+                    label="Showcase"
+                    title="🚀 xDeposit"
+                    domain="xdeposit.app"
+                    url="https://xdeposit.app"
+                  />
+
+                  <ExternalContent
+                    label="Showcase"
+                    title="💅 2022 Portfolio Excerpts"
+                    domain="gist.github.com"
+                    url="https://gist.github.com/L8D/0c4160067a823adfbdece7aea5734e5e"
+                  />
+                </div>
               </>
             }
             firstCircle={
@@ -866,7 +935,7 @@ function App() {
             }
             content={
               <>
-                <div>
+                <div className="grow">
                   I am driven by the belief that{" "}
                   <span className="font-semibold">
                     design has the power to transform lives
@@ -876,8 +945,25 @@ function App() {
                   I prefer the opportunity to challenge the status quo while
                   building a customer-focused product.
                 </div>
+
+                <div className="flex flex-wrap gap-5 gap-y-5">
+                  <ExternalContent
+                    label="Article"
+                    title="❤️ Evolving Design: High-Effort Anti-Modal Anti-Dropdown"
+                    domain="gist.github.com"
+                    url="https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac"
+                  />
+
+                  <ExternalContent
+                    label="Showcase"
+                    title="👻 2013 Portfolio & Manifesto"
+                    domain="l8d.github.io"
+                    url="https://l8d.github.io/portfolio/"
+                  />
+                </div>
               </>
             }
+
             firstCircle={
               <>
                 <div>
@@ -992,20 +1078,30 @@ function App() {
               ></div>
             }
             content={
-              <div>
-                When working with a team, I strive to create a harmonious team
-                culture that enables each individual to unlock their full
-                potential. Together, by codifying team-member feedback into team
-                working agreements, we can establish clear guidelines and
-                expectations that promote respectful communication, consistent
-                outcomes and equitable decision-making. Through empowering
-                working conditions, we can foster an environment where{" "}
-                <span className="font-semibold">
-                  every contributor can do their best work
-                </span>
-                .
-                {/* TODO: https://gist.github.com/L8D/093036002023be710cd43a0da55ad6dd */}
-              </div>
+              <>
+                <div className="grow">
+                  When working with a team, I strive to create a harmonious team
+                  culture that enables each individual to unlock their full
+                  potential. Together, by codifying team-member feedback into
+                  team working agreements, we can establish clear guidelines and
+                  expectations that promote respectful communication, consistent
+                  outcomes and equitable decision-making. Through empowering
+                  working conditions, we can foster an environment where{" "}
+                  <span className="font-semibold">
+                    every contributor can do their best work
+                  </span>
+                  .
+                </div>
+
+                <div className="flex flex-wrap gap-5 gap-y-5">
+                  <ExternalContent
+                    label="Article"
+                    title="💪 Bootstrapping lean product research"
+                    domain="gist.github.com"
+                    url="https://gist.github.com/L8D/093036002023be710cd43a0da55ad6dd"
+                  />
+                </div>
+              </>
             }
             firstCircle={
               <>
