@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useCallback, useRef } from "react";
-import {InlineWidget} from "react-calendly";
+import { InlineWidget } from "react-calendly";
 import { scroller, Element } from "react-scroll";
 import "./App.css";
 
@@ -1041,7 +1041,11 @@ function App() {
           }}
           className="absolute inset-0"
         ></div>
-        <div className="max-w-lg rounded-3xl mx-auto shadow-md z-10 relative">
+        <motion.div
+            viewport={{ once: ONCE }}
+          initial={{opacity: 0, y: 20, scale: 0.8}}
+          whileInView={{opacity: 1, y: 0, scale: 1, transition: {duration: 1, ease: 'circOut'}}}
+          className="max-w-lg rounded-3xl mx-auto shadow-md z-10 relative">
           <div className="flex justify-center relative">
             <img
               width="auto"
@@ -1057,8 +1061,10 @@ function App() {
             <div className="absolute inset-x-0 bottom-0 h-6 bg-white rounded-t-3xl"></div>
           </div>
 
-          <div className="bg-white py-5 rounded-b-3xl px-5 flex flex-col items-center gap-y-5">
-            <div className="-mt-6 inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
+          <motion.div
+            className="bg-white py-5 rounded-b-3xl px-5 flex flex-col items-center gap-y-5"
+          >
+            <div className="-mt-6 pt-12 inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
               contact
             </div>
 
@@ -1104,7 +1110,7 @@ function App() {
               </div>
             </div>
 
-            <div className="flex justify-between w-full gap-5 items-center opacity-75">
+            <div className="flex justify-between w-full gap-5 items-center opacity-75 my-14">
               <div className="grow border-t border-[#f7a17c]"></div>
               <div className="text-[#f7a17c] text-lg font-[HelveticaNowDisplay] font-semibold leading-none">
                 or
@@ -1112,13 +1118,18 @@ function App() {
               <div className="grow border-t border-[#f7a17c]"></div>
             </div>
 
-            <div className="inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
+            <div className="inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none mb-5">
               schedule a call
             </div>
 
-            <InlineWidget url="https://calendly.com/tenorb/45-minute-meeting" />
-          </div>
-        </div>
+            <div className="rounded-xl border border-[#252422]/[0.1] w-full overflow-hidden h-[675px] overflow-hidden">
+              <InlineWidget
+                styles={{ width: "100%", height: "675px" }}
+                url="https://calendly.com/tenorb/45-minute-meeting"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </>
   );
