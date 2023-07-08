@@ -1033,103 +1033,116 @@ function App() {
         </div>
       </Element>
 
-      <div className="bg-[#f7a17c] bg-[url(pattern.svg)] bg-repeat py-20 w-full px-5 relative">
+      <div className="bg-[#80bfff] w-full relative">
         <div
           style={{
             backgroundImage:
-              "radial-gradient(white, rgba(255, 255, 255, 0.6), transparent)",
+              "linear-gradient(to bottom, white, transparent, transparent)",
           }}
           className="absolute inset-0"
         ></div>
-        <motion.div
-            viewport={{ once: ONCE }}
-          initial={{opacity: 0, y: 20, scale: 0.8}}
-          whileInView={{opacity: 1, y: 0, scale: 1, transition: {duration: 1, ease: 'circOut'}}}
-          className="max-w-lg rounded-3xl mx-auto shadow-md z-10 relative">
-          <div className="flex justify-center relative">
-            <img
-              width="auto"
-              className="w-full max-w-lg rounded-t-3xl shadow-inner object-cover object-bottom max-h-[200px]"
-              alt="tenor"
-              src="/tenor-landscape.jpg"
-            />
-
-            <div
-              style={{ boxShadow: "inset 0 -10px 15px rgba(0, 0, 0, 0.4)" }}
-              className="absolute inset-0 h-full rounded-t-3xl"
-            ></div>
-            <div className="absolute inset-x-0 bottom-0 h-6 bg-white rounded-t-3xl"></div>
-          </div>
-
+        <div className="bg-[url(pattern-orange.svg)] py-20 w-full px-5 relative">
+          <div
+            style={{
+              backgroundImage:
+                "radial-gradient(white, rgba(255, 255, 255, 0.6), transparent)",
+            }}
+            className="absolute inset-0"
+          ></div>
           <motion.div
-            className="bg-white py-5 rounded-b-3xl px-5 flex flex-col items-center gap-y-5"
+            viewport={{ once: ONCE }}
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              transition: { duration: 1, ease: "circOut" },
+            }}
+            className="max-w-lg rounded-3xl mx-auto shadow-md z-10 relative"
           >
-            <div className="-mt-6 pt-12 inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
-              contact
-            </div>
-
-            <div className="flex flex-col gap-y-1">
-              <div className="font-[Albert_Sans] text-[#252422]/[0.6]">
-                <a
-                  className="hover:underline leading-none relative group"
-                  rel="noreferrer"
-                  href="mailto:tenor@fmail.co.uk"
-                  target="_blank"
-                >
-                  <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2] rounded-full"></div>
-
-                  <motion.div className="inline-block rounded-full font-[HelveticaNowDisplay] text-white tracking-wide not:border border-[#252422]/[0.1] flex justify-between items-center w-64 py-2">
-                    <div className="px-2 inline-block rounded-full font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.5] tracking-wide py-1">
-                      email
-                    </div>
-                    <div className="inline-block leading-none font-[Albert_Sans] text-[#252422] pr-2 pl-1.5 tracking-wider">
-                      tenor@fmail.co.uk
-                    </div>
-                  </motion.div>
-                </a>
-              </div>
-
-              <div className="font-[Albert_Sans] text-[#252422]/[0.6]">
-                <a
-                  className="hover:underline leading-none relative group"
-                  rel="noreferrer"
-                  href="https://github.com/L8D"
-                  target="_blank"
-                >
-                  <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2] rounded-full"></div>
-
-                  <motion.div className="inline-block rounded-full font-[HelveticaNowDisplay] text-white tracking-wide flex justify-between items-center w-64 py-2">
-                    <div className="px-2 inline-block rounded-full font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.5] tracking-wide py-1">
-                      github
-                    </div>
-                    <div className="inline-block leading-none font-[Albert_Sans] text-[#252422] pr-2 pl-1.5 tracking-wider">
-                      L8D
-                    </div>
-                  </motion.div>
-                </a>
-              </div>
-            </div>
-
-            <div className="flex justify-between w-full gap-5 items-center opacity-75 my-14">
-              <div className="grow border-t border-[#f7a17c]"></div>
-              <div className="text-[#f7a17c] text-lg font-[HelveticaNowDisplay] font-semibold leading-none">
-                or
-              </div>
-              <div className="grow border-t border-[#f7a17c]"></div>
-            </div>
-
-            <div className="inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none mb-5">
-              schedule a call
-            </div>
-
-            <div className="rounded-xl border border-[#252422]/[0.1] w-full overflow-hidden h-[675px] overflow-hidden">
-              <InlineWidget
-                styles={{ width: "100%", height: "675px" }}
-                url="https://calendly.com/tenorb/45-minute-meeting"
+            <div className="flex justify-center relative">
+              <img
+                width="auto"
+                className="w-full max-w-lg rounded-t-3xl shadow-inner object-cover object-bottom max-h-[200px]"
+                alt="tenor"
+                src="/tenor-landscape.jpg"
               />
+
+              <div
+                style={{ boxShadow: "inset 0 -10px 15px rgba(0, 0, 0, 0.4)" }}
+                className="absolute inset-0 h-full rounded-t-3xl"
+              ></div>
+              <div className="absolute inset-x-0 bottom-0 h-6 bg-white rounded-t-3xl"></div>
             </div>
+
+            <motion.div className="bg-white py-5 rounded-b-3xl px-5 flex flex-col items-center gap-y-5">
+              <div className="-mt-6 pt-12 inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none">
+                contact
+              </div>
+
+              <div className="flex flex-col gap-y-1">
+                <div className="font-[Albert_Sans] text-[#252422]/[0.6]">
+                  <a
+                    className="hover:underline leading-none relative group"
+                    rel="noreferrer"
+                    href="mailto:tenor@fmail.co.uk"
+                    target="_blank"
+                  >
+                    <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2] rounded-full"></div>
+
+                    <motion.div className="inline-block rounded-full font-[HelveticaNowDisplay] text-white tracking-wide not:border border-[#252422]/[0.1] flex justify-between items-center w-64 py-2">
+                      <div className="px-2 inline-block rounded-full font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.5] tracking-wide py-1">
+                        email
+                      </div>
+                      <div className="inline-block leading-none font-[Albert_Sans] text-[#252422] pr-2 pl-1.5 tracking-wider">
+                        tenor@fmail.co.uk
+                      </div>
+                    </motion.div>
+                  </a>
+                </div>
+
+                <div className="font-[Albert_Sans] text-[#252422]/[0.6]">
+                  <a
+                    className="hover:underline leading-none relative group"
+                    rel="noreferrer"
+                    href="https://github.com/L8D"
+                    target="_blank"
+                  >
+                    <div className="absolute inset-0 group-hover:bg-[#252422]/[0.1] group-active:bg-[#252422]/[0.2] rounded-full"></div>
+
+                    <motion.div className="inline-block rounded-full font-[HelveticaNowDisplay] text-white tracking-wide flex justify-between items-center w-64 py-2">
+                      <div className="px-2 inline-block rounded-full font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.5] tracking-wide py-1">
+                        github
+                      </div>
+                      <div className="inline-block leading-none font-[Albert_Sans] text-[#252422] pr-2 pl-1.5 tracking-wider">
+                        L8D
+                      </div>
+                    </motion.div>
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex justify-between w-full gap-5 items-center opacity-75 my-14">
+                <div className="grow border-t border-[#f7a17c]"></div>
+                <div className="text-[#f7a17c] text-lg font-[HelveticaNowDisplay] font-semibold leading-none">
+                  or
+                </div>
+                <div className="grow border-t border-[#f7a17c]"></div>
+              </div>
+
+              <div className="inline-block text-4xl font-[HelveticaNowDisplay] font-semibold text-[#252422]/[0.6] tracking-wide lowercase leading-none mb-5">
+                schedule a call
+              </div>
+
+              <div className="rounded-xl border border-[#252422]/[0.1] w-full overflow-hidden h-[675px] overflow-hidden">
+                <InlineWidget
+                  styles={{ width: "100%", height: "675px" }}
+                  url="https://calendly.com/tenorb/45-minute-meeting"
+                />
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </>
   );
