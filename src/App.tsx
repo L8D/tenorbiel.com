@@ -17,7 +17,7 @@ const PassionSection = (props: {
 
   const visible = useInView(sectionRef, {
     once: ONCE,
-    margin: "-200px",
+    margin: "-200px 0px",
   });
 
   const initialDelay = 0.4;
