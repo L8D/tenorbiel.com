@@ -13,19 +13,21 @@ const PassionSection = (props: {
   secondCircle: React.ReactNode;
   background: React.ReactNode;
 }) => {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const visible = useInView(sectionRef, {
     once: ONCE,
-    margin: '-200px'
-  })
+    margin: "-200px",
+  });
 
-  const initialDelay = 0.4
+  const initialDelay = 0.4;
 
   return (
     <motion.div
-      viewport={{once: ONCE}}
-      ref={sectionRef} className="w-full px-5 py-20 relative">
+      viewport={{ once: ONCE }}
+      ref={sectionRef}
+      className="w-full px-5 py-20 relative"
+    >
       {props.background}
       <div
         style={{
@@ -39,10 +41,11 @@ const PassionSection = (props: {
         <div className="grow flex flex-col gap-y-10 items-start">
           <div className="flex flex-col gap-y-5 items-start">
             <motion.div
-              initial={{opacity: 0, y: 10}}
-              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
-              transition={{delay: initialDelay, ease: 'easeOut'}}
-              className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+              initial={{ opacity: 0, y: 10 }}
+              animate={visible ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
+              transition={{ delay: initialDelay, ease: "easeOut" }}
+              className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide"
+            >
               <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
                 passion
               </div>
@@ -51,10 +54,11 @@ const PassionSection = (props: {
               </div>
             </motion.div>
             <motion.div
-              initial={{opacity: 0, y: 10}}
-              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
-              transition={{delay: initialDelay + 0.15, ease: 'easeOut'}}
-              className="max-w-full relative flex">
+              initial={{ opacity: 0, y: 10 }}
+              animate={visible ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
+              transition={{ delay: initialDelay + 0.15, ease: "easeOut" }}
+              className="max-w-full relative flex"
+            >
               <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
                 {props.heading}
               </span>
@@ -67,31 +71,42 @@ const PassionSection = (props: {
             </motion.div>
           </div>
           <motion.div
-              initial={{opacity: 0, y: 10}}
-              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
-            transition={{delay: initialDelay + 0.3, ease: 'easeOut'}}
-            className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
+            initial={{ opacity: 0, y: 10 }}
+            animate={visible ? { y: 0, opacity: 1 } : { y: 10, opacity: 0 }}
+            transition={{ delay: initialDelay + 0.3, ease: "easeOut" }}
+            className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5"
+          >
             {props.content}
           </motion.div>
         </div>
         {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
         <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
           <motion.div
-            initial={{opacity: 0, scale: 0, y: 10}}
-            animate={visible ? {y: 0, opacity: 1, scale: 1} : {y: 10, opacity: 0, scale: 0}}
-            transition={{ delay: initialDelay, ease: 'circOut', duration: 1}}
+            initial={{ opacity: 0, scale: 0, y: 10 }}
+            animate={
+              visible
+                ? { y: 0, opacity: 1, scale: 1 }
+                : { y: 10, opacity: 0, scale: 0 }
+            }
+            transition={{ delay: initialDelay, ease: "circOut", duration: 1 }}
           >
-
-          {props.firstCircle}
+            {props.firstCircle}
           </motion.div>
 
           <motion.div
-            initial={{opacity: 0, scale: 0, y: 10}}
-            animate={visible ? {y: 0, opacity: 1, scale: 1} : {y: 10, opacity: 0, scale: 0}}
-            transition={{ delay: initialDelay + 0.15, ease: 'circOut', duration: 1}}
+            initial={{ opacity: 0, scale: 0, y: 10 }}
+            animate={
+              visible
+                ? { y: 0, opacity: 1, scale: 1 }
+                : { y: 10, opacity: 0, scale: 0 }
+            }
+            transition={{
+              delay: initialDelay + 0.15,
+              ease: "circOut",
+              duration: 1,
+            }}
           >
-
-          {props.secondCircle}
+            {props.secondCircle}
           </motion.div>
         </div>
       </div>
@@ -977,14 +992,18 @@ function App() {
             }
             content={
               <div>
-                I am driven by the belief that{" "}
+                When working with a team, I strive to create a harmonious team
+                culture that enables each individual to unlock their full
+                potential. Together, by codifying team-member feedback into team
+                working agreements, we can establish clear guidelines and
+                expectations that promote respectful communication, consistent
+                outcomes and equitable decision-making. Through empowering
+                working conditions, we can foster an environment where{" "}
                 <span className="font-semibold">
-                  design has the power to transform lives
+                  every contributor can do their best work
                 </span>
-                . It is my unwavering commitment to design and develop digital
-                experiences that are accessible, user-friendly, and inclusive. I
-                prefer the opportunity to challenge the status quo while
-                building a customer-focused product.
+                .
+                {/* TODO: https://gist.github.com/L8D/093036002023be710cd43a0da55ad6dd */}
               </div>
             }
             firstCircle={
@@ -998,7 +1017,6 @@ function App() {
                 </div>
               </>
             }
-
             secondCircle={
               <>
                 <div className="w-80 h-80 relative overflow-hidden rounded-full">
@@ -1011,7 +1029,6 @@ function App() {
               </>
             }
           />
-
         </div>
       </Element>
     </>
