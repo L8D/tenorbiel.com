@@ -5,6 +5,100 @@ import "./App.css";
 
 const ONCE = true;
 
+const PassionSection = (props: {
+  count: number;
+  heading: React.ReactNode;
+  content: React.ReactNode;
+  firstCircle: React.ReactNode;
+  secondCircle: React.ReactNode;
+  background: React.ReactNode;
+}) => {
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  const visible = useInView(sectionRef, {
+    once: ONCE,
+    margin: '-200px'
+  })
+
+  const initialDelay = 0.4
+
+  return (
+    <motion.div
+      viewport={{once: ONCE}}
+      ref={sectionRef} className="w-full px-5 py-20 relative">
+      {props.background}
+      <div
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom, white, white, white, transparent)",
+        }}
+        className="absolute inset-0 w-full h-full from-[#f7a17c]"
+      ></div>
+
+      <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10">
+        <div className="grow flex flex-col gap-y-10 items-start">
+          <div className="flex flex-col gap-y-5 items-start">
+            <motion.div
+              initial={{opacity: 0, y: 10}}
+              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
+              transition={{delay: initialDelay, ease: 'easeOut'}}
+              className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+              <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
+                passion
+              </div>
+              <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
+                0{props.count}
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{opacity: 0, y: 10}}
+              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
+              transition={{delay: initialDelay + 0.15, ease: 'easeOut'}}
+              className="max-w-full relative flex">
+              <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
+                {props.heading}
+              </span>
+              {/*
+- animations
+- prototyping
+- research-informed UX improvements
+- user flows, look and feel
+    */}
+            </motion.div>
+          </div>
+          <motion.div
+              initial={{opacity: 0, y: 10}}
+              animate={visible ? {y: 0, opacity: 1} : {y: 10, opacity: 0}}
+            transition={{delay: initialDelay + 0.3, ease: 'easeOut'}}
+            className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
+            {props.content}
+          </motion.div>
+        </div>
+        {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
+        <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+          <motion.div
+            initial={{opacity: 0, scale: 0, y: 10}}
+            animate={visible ? {y: 0, opacity: 1, scale: 1} : {y: 10, opacity: 0, scale: 0}}
+            transition={{ delay: initialDelay, ease: 'circOut', duration: 1}}
+          >
+
+          {props.firstCircle}
+          </motion.div>
+
+          <motion.div
+            initial={{opacity: 0, scale: 0, y: 10}}
+            animate={visible ? {y: 0, opacity: 1, scale: 1} : {y: 10, opacity: 0, scale: 0}}
+            transition={{ delay: initialDelay + 0.15, ease: 'circOut', duration: 1}}
+          >
+
+          {props.secondCircle}
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const SkillTag = (props: { name: string; index: number }) => {
   return (
     <motion.div
@@ -677,68 +771,34 @@ function App() {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className="w-full px-5 py-20 relative">
-            <div className="absolute inset-0 w-full h-full bg-white"
-              style={{
-                backgroundSize: '80px',
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, white, white, white, transparent)",
-              }}
-              className="absolute inset-0 w-full h-full from-[#f7a17c]"
-            ></div>
-
-            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10">
-              <div className="grow flex flex-col gap-y-10 items-start">
-                <div className="flex flex-col gap-y-5 items-start">
-                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                      passion
-                    </div>
-                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
-                      01
-                    </div>
-                  </div>
-                  <div className="max-w-full relative flex">
-                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
-                      Interaction Design
-                    </span>
-                    {/*
-- animations
-- prototyping
-- research-informed UX improvements
-- user flows, look and feel
-    */}
-                  </div>
+          <PassionSection
+            count={1}
+            heading={<>Interaction Design</>}
+            content={
+              <>
+                <div>
+                  <span className="font-semibold">
+                    Empathy is the best building block for a user-friendly
+                    product.
+                  </span>{" "}
+                  Through research, I identify common interaction pitfalls in
+                  existing experiences. By staying aware of pitfalls and
+                  avoiding them, our final product can deliver an
+                  uncompromisingly-empathetic experience for your market.
                 </div>
-                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
-                  <div>
-                    <span className="font-semibold">
-                      Empathy is the best building block for a user-friendly
-                      product.
-                    </span>{" "}
-                    Through research, I identify common interaction pitfalls in
-                    existing experiences. By staying aware of pitfalls and
-                    avoiding them, our final product can deliver an
-                    uncompromisingly-empathetic experience for your market.
-                  </div>
-                  <ul className="list-inside list-disc">
-                    <li className="font-semibold">identifying pitfalls</li>
-                    <li className="font-semibold">
-                      innovating with motion design
-                    </li>
-                    <li className="font-semibold">
-                      delivering state-of-the-art user flows
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
-              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+                <ul className="list-inside list-disc">
+                  <li className="font-semibold">identifying pitfalls</li>
+                  <li className="font-semibold">
+                    innovating with motion design
+                  </li>
+                  <li className="font-semibold">
+                    delivering state-of-the-art user flows
+                  </li>
+                </ul>
+              </>
+            }
+            firstCircle={
+              <>
                 <div>
                   <video
                     className="rounded-full max-w-xs mx-auto"
@@ -748,6 +808,10 @@ function App() {
                     src="/piece-1.mov"
                   />
                 </div>
+              </>
+            }
+            secondCircle={
+              <>
                 <div className="w-80 h-80 relative overflow-hidden rounded-full">
                   <video
                     className="absolute w-full h-full rounded-full max-w-sm mx-auto object-cover w-full h-auto scale-150"
@@ -757,57 +821,49 @@ function App() {
                     src="/piece-2.mov"
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#f7a17c] bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-full"></div>
-          <div className="w-full px-5 py-20 relative">
-            <div className="absolute inset-0 w-full h-full bg-white"
-              style={{
-                backgroundSize: '140px',
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='64' viewBox='0 0 48 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M48 28v-4L36 12 24 24 12 12 0 24v4l4 4-4 4v4l12 12 12-12 12 12 12-12v-4l-4-4 4-4zM8 32l-6-6 10-10 10 10-6 6 6 6-10 10L2 38l6-6zm12 0l4-4 4 4-4 4-4-4zm12 0l-6-6 10-10 10 10-6 6 6 6-10 10-10-10 6-6zM0 16L10 6 4 0h4l4 4 4-4h4l-6 6 10 10L34 6l-6-6h4l4 4 4-4h4l-6 6 10 10v4L36 8 24 20 12 8 0 20v-4zm0 32l10 10-6 6h4l4-4 4 4h4l-6-6 10-10 10 10-6 6h4l4-4 4 4h4l-6-6 10-10v-4L36 56 24 44 12 56 0 44v4z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, white, white, white, transparent)",
-              }}
-              className="absolute inset-0 w-full h-full from-[#f7a17c]"
-            ></div>
-            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10">
-              <div className="grow flex flex-col gap-y-10 items-start">
-                <div className="flex flex-col gap-y-5 items-start">
-                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                      passion
-                    </div>
-                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
-                      02
-                    </div>
-                  </div>
-                  <div className="max-w-full relative flex">
-                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
-                      Inclusive Products
-                    </span>
-                  </div>
-                </div>
-                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
-                  <div>
-                    I am driven by the belief that{" "}
-                    <span className="font-semibold">
-                      design has the power to transform lives
-                    </span>
-                    . It is my unwavering commitment to design and develop
-                    digital experiences that are accessible, user-friendly, and
-                    inclusive. I prefer the opportunity to challenge the status
-                    quo while building a customer-focused product.
-                  </div>
-                </div>
-              </div>
+              </>
+            }
+            background={
+              <div
+                className="absolute inset-0 w-full h-full bg-white"
+                style={{
+                  backgroundSize: "80px",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+                }}
+              ></div>
+            }
+          />
 
-              {/* TODO link to https://gist.github.com/L8D/c27a4563f5d9e98b8220acb4bdae4cac */}
-              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+          <div className="bg-[#f7a17c] bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-full"></div>
+
+          <PassionSection
+            count={2}
+            heading={<>Inclusive Products</>}
+            background={
+              <div
+                className="absolute inset-0 w-full h-full bg-white"
+                style={{
+                  backgroundSize: "140px",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='64' viewBox='0 0 48 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M48 28v-4L36 12 24 24 12 12 0 24v4l4 4-4 4v4l12 12 12-12 12 12 12-12v-4l-4-4 4-4zM8 32l-6-6 10-10 10 10-6 6 6 6-10 10L2 38l6-6zm12 0l4-4 4 4-4 4-4-4zm12 0l-6-6 10-10 10 10-6 6 6 6-10 10-10-10 6-6zM0 16L10 6 4 0h4l4 4 4-4h4l-6 6 10 10L34 6l-6-6h4l4 4 4-4h4l-6 6 10 10v4L36 8 24 20 12 8 0 20v-4zm0 32l10 10-6 6h4l4-4 4 4h4l-6-6 10-10 10 10-6 6h4l4-4 4 4h4l-6-6 10-10v-4L36 56 24 44 12 56 0 44v4z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+                }}
+              ></div>
+            }
+            content={
+              <>
+                <div>
+                  I am driven by the belief that{" "}
+                  <span className="font-semibold">
+                    design has the power to transform lives
+                  </span>
+                  . It is my unwavering commitment to design and develop digital
+                  experiences that are accessible, user-friendly, and inclusive.
+                  I prefer the opportunity to challenge the status quo while
+                  building a customer-focused product.
+                </div>
+              </>
+            }
+            firstCircle={
+              <>
                 <div>
                   <img
                     alt="inclusive design"
@@ -815,146 +871,124 @@ function App() {
                     src="/inclusive-design.jpeg"
                   />
                 </div>
+              </>
+            }
+            secondCircle={
+              <div className="w-80 h-80 relative overflow-hidden rounded-full">
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center text-white/[0.8]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                    />
+                  </svg>
 
-                <div className="w-80 h-80 relative overflow-hidden rounded-full">
-                  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-white/[0.8]">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-12 h-12"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
-                      />
-                    </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+                    />
+                  </svg>
 
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-12 h-12"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
-                      />
-                    </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"
+                    />
+                  </svg>
 
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-12 h-12"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"
-                      />
-                    </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                    />
+                  </svg>
 
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-12 h-12"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
-                      />
-                    </svg>
-
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-12 h-12"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                      />
-                    </svg>
-                  </div>
-
-                  <img
-                    alt="globe"
-                    className="rounded-full w-full h-full object-cover"
-                    src="/globe.jpeg"
-                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                    />
+                  </svg>
                 </div>
+
+                <img
+                  alt="globe"
+                  className="rounded-full w-full h-full object-cover"
+                  src="/globe.jpeg"
+                />
               </div>
-            </div>
-          </div>
+            }
+          />
+
           <div className="bg-[#f7a17c] bg-[center_left_40px] bg-[url(pattern.svg)] bg-repeat h-8 w-full"></div>
-          <div className="w-full px-5 py-20 relative">
-            <div className="absolute inset-0 w-full h-full bg-white"
-              style={{
-                backgroundSize: '100px',
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='88' viewBox='0 0 80 88' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 21.91V26h-2c-9.94 0-18 8.06-18 18 0 9.943 8.058 18 18 18h2v4.09c8.012.722 14.785 5.738 18 12.73 3.212-6.99 9.983-12.008 18-12.73V62h2c9.94 0 18-8.06 18-18 0-9.943-8.058-18-18-18h-2v-4.09c-8.012-.722-14.785-5.738-18-12.73-3.212 6.99-9.983 12.008-18 12.73zM54 58v4.696c-5.574 1.316-10.455 4.428-14 8.69-3.545-4.262-8.426-7.374-14-8.69V58h-5.993C12.27 58 6 51.734 6 44c0-7.732 6.275-14 14.007-14H26v-4.696c5.574-1.316 10.455-4.428 14-8.69 3.545 4.262 8.426 7.374 14 8.69V30h5.993C67.73 30 74 36.266 74 44c0 7.732-6.275 14-14.007 14H54zM42 88c0-9.94 8.06-18 18-18h2v-4.09c8.016-.722 14.787-5.738 18-12.73v7.434c-3.545 4.262-8.426 7.374-14 8.69V74h-5.993C52.275 74 46 80.268 46 88h-4zm-4 0c0-9.943-8.058-18-18-18h-2v-4.09c-8.012-.722-14.785-5.738-18-12.73v7.434c3.545 4.262 8.426 7.374 14 8.69V74h5.993C27.73 74 34 80.266 34 88h4zm4-88c0 9.943 8.058 18 18 18h2v4.09c8.012.722 14.785 5.738 18 12.73v-7.434c-3.545-4.262-8.426-7.374-14-8.69V14h-5.993C52.27 14 46 7.734 46 0h-4zM0 34.82c3.213-6.992 9.984-12.008 18-12.73V18h2c9.94 0 18-8.06 18-18h-4c0 7.732-6.275 14-14.007 14H14v4.696c-5.574 1.316-10.455 4.428-14 8.69v7.433z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`
-              }}
-            ></div>
-            <div
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, white, white, white, transparent)",
-              }}
-              className="absolute inset-0 w-full h-full from-[#f7a17c]"
-            ></div>
-            <div className="w-full max-w-7xl flex flex-col sm:flex-row sm:gap-10 gap-y-10 mx-auto relative z-10">
-              <div className="grow flex flex-col gap-y-10 items-start">
-                <div className="flex flex-col gap-y-5 items-start">
-                  <div className="inline-block bg-[#252422]/[0.75] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                    <div className="px-2 inline-block bg-[#252422] rounded-full uppercase font-[HelveticaNowDisplay] font-semibold text-white tracking-wide">
-                      passion
-                    </div>
-                    <div className="inline-block leading-none font-mono text-white/[0.5] pr-2 pl-1.5">
-                      03
-                    </div>
-                  </div>
-                  <div className="max-w-full relative flex">
-                    <span className="text-[#eb5e28] text-4xl lg:text-7xl font-bold font-['Montserrat'] uppercase not:text-[#252422] tracking-wider">
-                      Team Advocacy
-                    </span>
-                  </div>
-                </div>
-                <div className="font-[HelveticaNowDisplay] text-[#252422] text-[16px] sm:text-[20px] tracking-wide max-w-prose flex flex-col gap-y-5">
-                  <div>
-                    When working with a team, I strive to create a harmonious
-                    team culture that enables each individual to unlock their
-                    full potential. Together, by codifying team-member feedback
-                    into team working agreements, we can establish clear
-                    guidelines and expectations that promote respectful
-                    communication, consistent outcomes and equitable
-                    decision-making. Through empowering working conditions, we
-                    can foster an environment where{" "}
-                    <span className="font-semibold">
-                      every contributor can do their best work
-                    </span>
-                    .
-                    {/* TODO: https://gist.github.com/L8D/093036002023be710cd43a0da55ad6dd */}
-                  </div>
-                </div>
-              </div>
 
-              <div className="max-w-6xl mx-auto flex flex-col items-center sm:items-end gap-y-10 grow-0">
+          <PassionSection
+            count={3}
+            heading={<>Team Advocacy</>}
+            background={
+              <div
+                className="absolute inset-0 w-full h-full bg-white"
+                style={{
+                  backgroundSize: "100px",
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='88' viewBox='0 0 80 88' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 21.91V26h-2c-9.94 0-18 8.06-18 18 0 9.943 8.058 18 18 18h2v4.09c8.012.722 14.785 5.738 18 12.73 3.212-6.99 9.983-12.008 18-12.73V62h2c9.94 0 18-8.06 18-18 0-9.943-8.058-18-18-18h-2v-4.09c-8.012-.722-14.785-5.738-18-12.73-3.212 6.99-9.983 12.008-18 12.73zM54 58v4.696c-5.574 1.316-10.455 4.428-14 8.69-3.545-4.262-8.426-7.374-14-8.69V58h-5.993C12.27 58 6 51.734 6 44c0-7.732 6.275-14 14.007-14H26v-4.696c5.574-1.316 10.455-4.428 14-8.69 3.545 4.262 8.426 7.374 14 8.69V30h5.993C67.73 30 74 36.266 74 44c0 7.732-6.275 14-14.007 14H54zM42 88c0-9.94 8.06-18 18-18h2v-4.09c8.016-.722 14.787-5.738 18-12.73v7.434c-3.545 4.262-8.426 7.374-14 8.69V74h-5.993C52.275 74 46 80.268 46 88h-4zm-4 0c0-9.943-8.058-18-18-18h-2v-4.09c-8.012-.722-14.785-5.738-18-12.73v7.434c3.545 4.262 8.426 7.374 14 8.69V74h5.993C27.73 74 34 80.266 34 88h4zm4-88c0 9.943 8.058 18 18 18h2v4.09c8.012.722 14.785 5.738 18 12.73v-7.434c-3.545-4.262-8.426-7.374-14-8.69V14h-5.993C52.27 14 46 7.734 46 0h-4zM0 34.82c3.213-6.992 9.984-12.008 18-12.73V18h2c9.94 0 18-8.06 18-18h-4c0 7.732-6.275 14-14.007 14H14v4.696c-5.574 1.316-10.455 4.428-14 8.69v7.433z' fill='%2380bfff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+                }}
+              ></div>
+            }
+            content={
+              <div>
+                I am driven by the belief that{" "}
+                <span className="font-semibold">
+                  design has the power to transform lives
+                </span>
+                . It is my unwavering commitment to design and develop digital
+                experiences that are accessible, user-friendly, and inclusive. I
+                prefer the opportunity to challenge the status quo while
+                building a customer-focused product.
+              </div>
+            }
+            firstCircle={
+              <>
                 <div className="h-80 w-80 relative overflow-hidden rounded-full">
                   <img
                     alt="inclusive design"
@@ -962,7 +996,11 @@ function App() {
                     src="/team-advocacy-1.jpg"
                   />
                 </div>
+              </>
+            }
 
+            secondCircle={
+              <>
                 <div className="w-80 h-80 relative overflow-hidden rounded-full">
                   <img
                     alt="globe"
@@ -970,9 +1008,10 @@ function App() {
                     src="/team-advocacy-2.jpg"
                   />
                 </div>
-              </div>
-            </div>
-          </div>
+              </>
+            }
+          />
+
         </div>
       </Element>
     </>
