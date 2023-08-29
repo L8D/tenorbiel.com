@@ -869,8 +869,8 @@ function App() {
                   <ExternalContent
                     label="Showcase"
                     title="🚀 xDeposit"
-                    domain="xdeposit.app"
-                    url="https://xdeposit.app"
+                    domain="xdeposit.tenorbiel.com"
+                    url="https://xdeposit.tenorbiel.com"
                   />
 
                   <ExternalContent
