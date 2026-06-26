@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/2026",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/2023/:path((?!.*\\.).*)",
+      "destination": "/2023/index.html"
+    },
+    {
+      "source": "/2026/:path((?!.*\\.).*)",
+      "destination": "/2026/index.html"
+    }
+  ]
+}

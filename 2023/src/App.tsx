@@ -890,7 +890,7 @@ function App() {
                     autoPlay
                     loop
                     muted
-                    src="/piece-1.mov"
+                    src={process.env.PUBLIC_URL + "/piece-1.mov"}
                   />
                 </div>
               </>
@@ -903,7 +903,7 @@ function App() {
                     autoPlay
                     loop
                     muted
-                    src="/piece-2.mov"
+                    src={process.env.PUBLIC_URL + "/piece-2.mov"}
                   />
                 </div>
               </>
@@ -970,7 +970,7 @@ function App() {
                   <img
                     alt="inclusive design"
                     className="rounded-full max-w-xs mx-auto saturate-50"
-                    src="/inclusive-design.jpeg"
+                    src={process.env.PUBLIC_URL + "/inclusive-design.jpeg"}
                   />
                 </div>
               </>
@@ -1057,7 +1057,7 @@ function App() {
                 <img
                   alt="globe"
                   className="rounded-full w-full h-full object-cover"
-                  src="/globe.jpeg"
+                  src={process.env.PUBLIC_URL + "/globe.jpeg"}
                 />
               </div>
             }
@@ -1109,7 +1109,7 @@ function App() {
                   <img
                     alt="inclusive design"
                     className="rounded-full h-full w-full object-cover"
-                    src="/team-advocacy-1.jpg"
+                    src={process.env.PUBLIC_URL + "/team-advocacy-1.jpg"}
                   />
                 </div>
               </>
@@ -1120,7 +1120,7 @@ function App() {
                   <img
                     alt="globe"
                     className="rounded-full w-full h-full object-cover"
-                    src="/team-advocacy-2.jpg"
+                    src={process.env.PUBLIC_URL + "/team-advocacy-2.jpg"}
                   />
                 </div>
               </>
@@ -1161,7 +1161,7 @@ function App() {
                 width="auto"
                 className="w-full max-w-lg rounded-t-3xl shadow-inner object-cover object-bottom max-h-[200px]"
                 alt="tenor"
-                src="/tenor-landscape.jpg"
+                src={process.env.PUBLIC_URL + "/tenor-landscape.jpg"}
               />
 
               <div
