@@ -935,7 +935,7 @@ function App() {
             }
             content={
               <>
-                <div className="grow">
+                <div className="grow max-w-prose">
                   I am driven by the belief that{" "}
                   <span className="font-semibold">
                     design has the power to transform lives
